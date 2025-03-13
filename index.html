@@ -4,229 +4,299 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Demo Page of TaST</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: "Helvetica", "Hiragino Kaku Gothic ProN", sans-serif;
-      line-height: 1.6;
-      margin: 20px;
-      background-color: #f9f9f9;
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #00509a; /* RGB(0, 80, 154) */
+      --accent-color: #e74c3c;
+      --text-color: #2c3e50;
+      --background-color: #f8f9fa;
+      --card-color: #ffffff;
+      --border-radius: 12px;
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
     }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      line-height: 1.6;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      padding: 40px 20px;
+    }
+    
     .container {
       max-width: 1500px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 0 auto;
+      background: var(--card-color);
+      padding: 40px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
     }
-    h1, h2 {
+    
+    .header {
       text-align: center;
-      /* color: #333333; */
+      margin-bottom: 50px;
+      position: relative;
+      padding-bottom: 20px;
     }
+    
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+    
+    .header h2 {
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--text-color);
+      opacity: 0.9;
+    }
+    
     .section {
-      margin-bottom: 60px;
+      margin-bottom: 70px;
     }
-    .presentation-info {
-      text-align: center;
-      margin-bottom: 20px;
+    
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, rgba(0, 80, 154, 0.5), rgba(0, 80, 154, 0.5), rgba(0, 80, 154, 0.5));
+      margin: 40px 0;
+      border: none;
     }
-    .presentation-info h1 {
-      font-size: 2rem;
-      margin-bottom: 5px;
-    }
-    .presentation-info h2 {
-      font-size: 1.6rem;
-      /* color: #555; */
-      margin: 5px 0;
-    }
+    
     img {
       max-width: 100%;
       height: auto;
       display: block;
       margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     }
+    
+    .sample-title {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 30px;
+      padding-left: 20px;
+      border-left: 4px solid var(--secondary-color);
+      color: var(--primary-color);
+    }
+    
     .audio-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2px;
-      }
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+    
     .audio-container {
-      margin: 0px 0;
+      background: #f8f9fa;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     }
+    
     .audio-container h3 {
-      font-size: 1.rem;
-      margin-top: 0px;
-      margin-bottom: 0px;
-      margin-left: 65px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 15px;
+      color: var(--primary-color);
     }
-    .audio-container audio {
-      margin-top: 0px; /* 左側に20pxの余白を追加 */
-      margin-left: 65px; /* 左側に20pxの余白を追加 */
-      display: block; /* ブロック表示にして余白を適用 */
+    
+    audio {
+      width: 100%;
+      margin-bottom: 15px;
+      border-radius: 30px;
     }
-    .audio-container img {
-      margin-left: 0px; /* 左側に20pxの余白を追加 */
-      /* display: block; ブロック表示にして余白を適用 */
+    
+    audio::-webkit-media-controls-panel {
+      background-color: #f1f3f5;
     }
-    /* サンプル音源タイトルを左揃えに */
-    .sample-audio-title {
-    text-align: left;
-    margin-top: 40px;
-    margin-bottom: 0px;
-    margin-left: 65px;
-    /* color: #333333; */
+    
+    @media (max-width: 768px) {
+      .audio-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .container {
+        padding: 20px;
+      }
+      
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .header h2 {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="presentation-info">
+    <div class="header">
       <h1>クラスベース目的音抽出における抽出スケール制御手法の検討 (1-Q-12)</h1>
       <h2>佐藤 僚, 春田 智穂, 昼間 信彦 (リオン), 井本 桂右 (同志社大)</h2>
     </div>
     
     <!-- 提案手法の図 -->
     <div class="section">
-        <!-- <h2>提案手法</h2> -->
-        <img src="fig/task.png" alt="提案手法の図">
-      </div>
-
-      <hr>
-
-      <!------------ Sample 1 ------------>
-      <div class="section">
-        <h2 class="sample-audio-title">Sample 1</h2>
-        <div class="audio-grid">
-          <!-- Mixture -->
-          <div class="audio-container">
-            <h3>Mixture</h3>
-            <audio controls>
-              <source src="audio/mixture_15.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/gt_15.png" alt="Mixtureの波形">
-          </div>
-          <!-- Extracted 1 -->
-          <div class="audio-container">
-            <h3>Extracted 1</h3>
-            <audio controls>
-              <source src="audio/extracted_15_1.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/extracted_15_1.png" alt="Extracted 1の波形">
-          </div>
-          <!-- Extracted 2 -->
-          <div class="audio-container">
-            <h3>Extracted 2</h3>
-            <audio controls>
-              <source src="audio/extracted_15_2.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/extracted_15_2.png" alt="Extracted 2の波形">
-          </div>
-          <!-- Extracted 3 -->
-          <div class="audio-container">
-            <h3>Extracted 3</h3>
-            <audio controls>
-              <source src="audio/extracted_15_3.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/extracted_15_3.png" alt="Extracted 3の波形">
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <!------------ Sample 2 ------------>
-      <div class="section">
-        <h2 class="sample-audio-title">Sample 2</h2>
-        <div class="audio-grid">
-          <!-- Mixture -->
-          <div class="audio-container">
-            <h3>Mixture</h3>
-            <audio controls>
-              <source src="audio/mixture_147.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/gt_147.png" alt="Mixtureの波形">
-          </div>
-          <!-- Extracted 1 -->
-          <div class="audio-container">
-            <h3>Extracted 1</h3>
-            <audio controls>
-              <source src="audio/extracted_147_1.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/extracted_147_1.png" alt="Extracted 1の波形">
-          </div>
-          <!-- Extracted 2 -->
-          <div class="audio-container">
-            <h3>Extracted 2</h3>
-            <audio controls>
-              <source src="audio/extracted_147_2.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/extracted_147_2.png" alt="Extracted 2の波形">
-          </div>
-          <!-- Extracted 3 -->
-          <div class="audio-container">
-            <h3>Extracted 3</h3>
-            <audio controls>
-              <source src="audio/extracted_147_3.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/extracted_147_3.png" alt="Extracted 3の波形">
-          </div>
-        </div>
-      </div>
-
-
-      <hr>
-
-      <!------------ Sample 3 ------------>
-      <div class="section">
-        <h2 class="sample-audio-title">Sample 3</h2>
-        <div class="audio-grid">
-          <!-- Mixture -->
-          <div class="audio-container">
-            <h3>Mixture</h3>
-            <audio controls>
-              <source src="audio/mixture_52.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/gt_52.png" alt="Mixtureの波形">
-          </div>
-          <!-- Extracted 1 -->
-          <div class="audio-container">
-            <h3>Extracted 1</h3>
-            <audio controls>
-              <source src="audio/extracted_52_1.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/extracted_52_1.png" alt="Extracted 1の波形">
-          </div>
-          <!-- Extracted 2 -->
-          <div class="audio-container">
-            <h3>Extracted 2</h3>
-            <audio controls>
-              <source src="audio/extracted_52_2.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/extracted_52_2.png" alt="Extracted 2の波形">
-          </div>
-          <!-- Extracted 3 -->
-          <div class="audio-container">
-            <h3>Extracted 3</h3>
-            <audio controls>
-              <source src="audio/extracted_52_3.wav" type="audio/wav">
-              お使いのブラウザはオーディオ要素をサポートしていません。
-            </audio>
-            <img src="fig/extracted_52_3.png" alt="Extracted 3の波形">
-          </div>
-        </div>
-      </div>
-
+      <img src="fig/task.png" alt="提案手法の図">
     </div>
-  </body>
-  </html>
+
+    <hr class="section-divider">
+
+    <!------------ Sample 1 ------------>
+    <div class="section">
+      <h2 class="sample-title">Sample 1</h2>
+      <div class="audio-grid">
+        <!-- Mixture -->
+        <div class="audio-container">
+          <h3>Mixture</h3>
+          <audio controls>
+            <source src="audio/mixture_15.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/gt_15.png" alt="Mixtureの波形">
+        </div>
+        
+        <!-- Extracted 1 -->
+        <div class="audio-container">
+          <h3>Extracted 1</h3>
+          <audio controls>
+            <source src="audio/extracted_15_1.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/extracted_15_1.png" alt="Extracted 1の波形">
+        </div>
+        
+        <!-- Extracted 2 -->
+        <div class="audio-container">
+          <h3>Extracted 2</h3>
+          <audio controls>
+            <source src="audio/extracted_15_2.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/extracted_15_2.png" alt="Extracted 2の波形">
+        </div>
+        
+        <!-- Extracted 3 -->
+        <div class="audio-container">
+          <h3>Extracted 3</h3>
+          <audio controls>
+            <source src="audio/extracted_15_3.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/extracted_15_3.png" alt="Extracted 3の波形">
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!------------ Sample 2 ------------>
+    <div class="section">
+      <h2 class="sample-title">Sample 2</h2>
+      <div class="audio-grid">
+        <!-- Mixture -->
+        <div class="audio-container">
+          <h3>Mixture</h3>
+          <audio controls>
+            <source src="audio/mixture_147.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/gt_147.png" alt="Mixtureの波形">
+        </div>
+        
+        <!-- Extracted 1 -->
+        <div class="audio-container">
+          <h3>Extracted 1</h3>
+          <audio controls>
+            <source src="audio/extracted_147_1.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/extracted_147_1.png" alt="Extracted 1の波形">
+        </div>
+        
+        <!-- Extracted 2 -->
+        <div class="audio-container">
+          <h3>Extracted 2</h3>
+          <audio controls>
+            <source src="audio/extracted_147_2.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/extracted_147_2.png" alt="Extracted 2の波形">
+        </div>
+        
+        <!-- Extracted 3 -->
+        <div class="audio-container">
+          <h3>Extracted 3</h3>
+          <audio controls>
+            <source src="audio/extracted_147_3.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/extracted_147_3.png" alt="Extracted 3の波形">
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!------------ Sample 3 ------------>
+    <div class="section">
+      <h2 class="sample-title">Sample 3</h2>
+      <div class="audio-grid">
+        <!-- Mixture -->
+        <div class="audio-container">
+          <h3>Mixture</h3>
+          <audio controls>
+            <source src="audio/mixture_52.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/gt_52.png" alt="Mixtureの波形">
+        </div>
+        
+        <!-- Extracted 1 -->
+        <div class="audio-container">
+          <h3>Extracted 1</h3>
+          <audio controls>
+            <source src="audio/extracted_52_1.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/extracted_52_1.png" alt="Extracted 1の波形">
+        </div>
+        
+        <!-- Extracted 2 -->
+        <div class="audio-container">
+          <h3>Extracted 2</h3>
+          <audio controls>
+            <source src="audio/extracted_52_2.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/extracted_52_2.png" alt="Extracted 2の波形">
+        </div>
+        
+        <!-- Extracted 3 -->
+        <div class="audio-container">
+          <h3>Extracted 3</h3>
+          <audio controls>
+            <source src="audio/extracted_52_3.wav" type="audio/wav">
+            お使いのブラウザはオーディオ要素をサポートしていません。
+          </audio>
+          <img src="fig/extracted_52_3.png" alt="Extracted 3の波形">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
